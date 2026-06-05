@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 時代的信仰與智慧 — 簡報</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#111827; font-family:'Segoe UI','Helvetica Neue',Arial,'Noto Sans TC',sans-serif; overflow:hidden; height:100vh; }
+
+  .pres { width:100vw; height:100vh; position:relative; }
+
+  .slide {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition:opacity .5s ease;
+  }
+  .slide.active { opacity:1; pointer-events:all; }
+
+  .slide-inner {
+    width:min(960px, 95vw);
+    padding:clamp(24px,4vw,56px);
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  /* Nav */
+  .nav {
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:12px; z-index:100;
+    background:rgba(0,0,0,.55); backdrop-filter:blur(8px);
+    border-radius:40px; padding:10px 20px;
+    border:1px solid rgba(255,255,255,.1);
+  }
+  .nav button {
+    background:none; border:none; color:rgba(255,255,255,.7);
+    font-size:18px; cursor:pointer; padding:4px 10px;
+    border-radius:6px; transition:.2s;
+  }
+  .nav button:hover { background:rgba(255,255,255,.15); color:#fff; }
+  .nav .counter { color:rgba(255,255,255,.5); font-size:13px; min-width:50px; text-align:center; }
+  .dot-row { display:flex; gap:6px; }
+  .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.25); cursor:pointer; transition:.2s; }
+  .dot.on { background:#E8B84B; transform:scale(1.3); }
+
+  /* Colours */
+  :root {
+    --gold:#E8B84B;
+    --dark:#0D1B2A;
+    --blue:#1A237E;
+    --green:#1B5E20;
+    --red:#B71C1C;
+    --purple:#4A148C;
+    --cream:#F5E6C8;
+  }
+
+  /* ── SLIDE STYLES ── */
+
+  /* S1 – Title */
+  .s1 { background:linear-gradient(135deg,#080E1A 0%,#0F2A48 60%,#080E1A 100%); }
+  .s1 .icon { font-size:clamp(48px,7vw,80px); text-align:center; margin-bottom:20px; }
+  .s1 h1 { font-size:clamp(28px,4.5vw,56px); font-weight:800; color:#fff; text-align:center; letter-spacing:2px; margin-bottom:12px; }
+  .s1 .en { color:var(--gold); font-size:clamp(13px,2vw,22px); text-align:center; font-style:italic; margin-bottom:18px; }
+  .s1 .tags { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+  .s1 .tag { background:rgba(232,184,75,.15); border:1px solid rgba(232,184,75,.4); color:var(--cream); padding:6px 16px; border-radius:20px; font-size:clamp(11px,1.5vw,14px); }
+  .s1 .ref { text-align:center; margin-top:30px; color:rgba(255,255,255,.3); font-size:12px; letter-spacing:2px; }
+  .gold-bar { width:80px; height:3px; background:var(--gold); margin:0 auto 24px; border-radius:2px; }
+
+  /* S2 – Scam */
+  .s2 { background:#F8F4EE; }
+  .slide-hdr { background:var(--blue); color:#fff; padding:12px 24px; border-radius:10px 10px 0 0; font-size:clamp(15px,2vw,22px); font-weight:700; margin-bottom:0; }
+  .scenario-box { background:#FFF8E1; border-left:5px solid #FFC107; padding:14px 18px; font-size:13px; color:#5D4037; margin-bottom:16px; border-radius:0 8px 8px 0; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .card { border-radius:10px; padding:18px; }
+  .card.g { background:#E8F5E9; border:1.5px solid #4CAF50; }
+  .card.r { background:#FFEBEE; border:1.5px solid #F44336; }
+  .card h3 { font-size:14px; font-weight:700; margin-bottom:8px; }
+  .card.g h3 { color:#2E7D32; }
+  .card.r h3 { color:#C62828; }
+  .card li { font-size:12px; color:#444; margin-left:16px; margin-bottom:4px; }
+
+  /* S3 – Risks */
+  .s3 { background:#F8F4EE; }
+  .risk-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px; }
+  .risk-card { background:#fff; border:1px solid #E0E0E0; border-radius:10px; padding:16px; display:flex; gap:12px; align-items:flex-start; box-shadow:0 2px 6px rgba(0,0,0,.06); }
+  .risk-card .ri { font-size:28px; }
+  .risk-card h4 { font-size:13px; font-weight:700; color:#B71C1C; margin-bottom:4px; }
+  .risk-card p { font-size:12px; color:#555; }
+  .tip { background:#FFF8E1; border-radius:8px; padding:12px 16px; font-size:12px; color:#5D4037; font-style:italic; margin-top:12px; }
+
+  /* S4 – Scripture dark */
+  .s4 { background:linear-gradient(135deg,#0D1B2A,#16213E); }
+  .scripture { text-align:center; }
+  .scripture .ref-label { color:var(--gold); font-size:14px; letter-spacing:3px; font-weight:700; margin-bottom:20px; }
+  .scripture .verse { font-size:clamp(20px,3.5vw,36px); font-weight:700; color:#fff; line-height:1.8; margin-bottom:20px; }
+  .icon-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:20px; }
+  .icon-card { background:#16213E; border:1px solid rgba(232,184,75,.3); border-radius:10px; padding:16px 8px; text-align:center; }
+  .icon-card .ei { font-size:26px; margin-bottom:8px; }
+  .icon-card p { font-size:11px; color:var(--cream); }
+  .bottom-note { text-align:center; color:rgba(255,255,255,.35); font-size:12px; margin-top:18px; font-style:italic; }
+
+  /* S5 – 1 John */
+  .s5 { background:linear-gradient(135deg,#1B4332,#2D6A4F); }
+  .s5 .verse { font-size:clamp(20px,3.5vw,34px); font-weight:700; color:#fff; text-align:center; line-height:1.9; margin-bottom:20px; }
+  .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .col-hdr { border-radius:8px 8px 0 0; padding:10px; text-align:center; font-weight:700; color:#fff; font-size:14px; }
+  .col-item { padding:10px; text-align:center; font-size:13px; }
+  .col1 .col-hdr { background:#37474F; }
+  .col1 .col-item:nth-child(odd) { background:#ECEFF1; color:#333; }
+  .col1 .col-item:nth-child(even) { background:#CFD8DC; color:#333; }
+  .col2 .col-hdr { background:#1B5E20; }
+  .col2 .col-item:nth-child(odd) { background:#E8F5E9; color:#1B5E20; font-weight:600; }
+  .col2 .col-item:nth-child(even) { background:#C8E6C9; color:#1B5E20; font-weight:600; }
+  .col-wrap { border-radius:10px; overflow:hidden; }
+  .anchor { text-align:center; color:var(--gold); font-weight:700; font-size:14px; margin-top:16px; }
+
+  /* S6 – Reminders */
+  .s6 { background:#F8F4EE; }
+  .reminder { border-radius:10px; padding:16px 18px; display:flex; gap:14px; align-items:flex-start; margin-bottom:10px; }
+  .r1 { background:#E3F2FD; border-left:5px solid #1565C0; }
+  .r2 { background:#E8F5E9; border-left:5px solid #2E7D32; }
+  .r3 { background:#F3E5F5; border-left:5px solid #6A1B9A; }
+  .rnum { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff; flex-shrink:0; margin-top:2px; }
+  .r1 .rnum { background:#1565C0; }
+  .r2 .rnum { background:#2E7D32; }
+  .r3 .rnum { background:#6A1B9A; }
+  .rcontent h4 { font-size:14px; font-weight:700; margin-bottom:5px; }
+  .r1 .rcontent h4 { color:#1565C0; }
+  .r2 .rcontent h4 { color:#2E7D32; }
+  .r3 .rcontent h4 { color:#6A1B9A; }
+  .rcontent p { font-size:12px; color:#444; }
+
+  /* S7 – Identity */
+  .s7 { background:linear-gradient(135deg,#0D1B2A,#1A3A5C); }
+  .s7 .verse-small { font-size:clamp(14px,2vw,20px); color:#fff; text-align:center; line-height:1.8; margin-bottom:22px; }
+  .id-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .id-card { background:linear-gradient(135deg,#1A237E,#283593); border-radius:10px; padding:18px 12px; text-align:center; }
+  .id-num { background:var(--gold); color:var(--dark); width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; margin-bottom:8px; }
+  .id-card h4 { font-size:12px; font-weight:700; color:var(--gold); margin-bottom:6px; }
+  .id-card p { font-size:11px; color:#C5CAE9; line-height:1.6; }
+  .id-note { text-align:center; color:rgba(255,255,255,.4); font-size:12px; margin-top:16px; font-style:italic; }
+
+  /* S8 – Light */
+  .s8 { background:linear-gradient(135deg,#1B2838,#243447); }
+  .light-title { color:var(--gold); font-size:14px; font-weight:700; margin-bottom:14px; }
+  .light-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+  .light-card { background:#2A3A4A; border:1px solid rgba(232,184,75,.3); border-radius:10px; padding:14px 8px; text-align:center; }
+  .light-card .li-icon { font-size:26px; margin-bottom:8px; }
+  .light-card p { font-size:11px; color:var(--cream); }
+  .mantra { text-align:center; color:var(--gold); font-size:clamp(13px,1.8vw,18px); font-weight:700; font-style:italic; margin:20px 0 10px; }
+  .mission { text-align:center; color:var(--cream); font-size:12px; }
+
+  /* S9 – Prayer */
+  .s9 { background:linear-gradient(135deg,#080E1A,#0F2A48); }
+  .prayer-box { background:rgba(255,255,255,.05); border:1px solid rgba(232,184,75,.3); border-left:4px solid var(--gold); border-radius:12px; padding:32px 36px; text-align:center; max-width:600px; margin:0 auto; }
+  .prayer-box .pi { font-size:40px; margin-bottom:14px; }
+  .prayer-box h3 { color:var(--gold); font-size:16px; letter-spacing:3px; margin-bottom:20px; }
+  .prayer-box p { font-size:14px; color:#C5CAE9; line-height:2.1; font-style:italic; }
+  .prayer-box .amen { font-size:18px; color:var(--gold); font-weight:700; margin-top:16px; font-style:normal; }
+
+  /* S10 – Close */
+  .s10 { background:linear-gradient(135deg,#060C16,#0D1B2A); }
+  .s10 .main-title { font-size:clamp(20px,3.5vw,40px); color:#fff; font-weight:700; text-align:center; margin-bottom:8px; }
+  .s10 .big-word { font-size:clamp(48px,9vw,96px); font-weight:800; color:var(--gold); text-align:center; margin-bottom:24px; }
+  .s10 .deco { font-size:40px; text-align:center; margin-bottom:24px; }
+  .s10 .quote { font-size:clamp(13px,1.8vw,18px); color:var(--cream); text-align:center; font-style:italic; margin-bottom:8px; }
+  .s10 .qref { color:var(--gold); font-weight:700; font-size:14px; text-align:center; margin-bottom:20px; }
+  .s10 .final { color:rgba(255,255,255,.35); font-size:12px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="pres" id="pres">
+
+  <!-- S1 Title -->
+  <div class="slide s1 active">
+    <div class="slide-inner">
+      <div class="icon">🕊️</div>
+      <h1>AI 時代的信仰與智慧</h1>
+      <div class="en">Wisdom &amp; Faith in the Age of AI</div>
+      <div class="gold-bar"></div>
+      <div class="tags">
+        <span class="tag">📱 認識 AI 詐騙</span>
+        <span class="tag">🔒 守護生物辨識資料</span>
+        <span class="tag">💛 在愛中坦然無懼</span>
+      </div>
+      <div class="ref">彼得前書 2:9 · 馬太福音 24:12 · 約翰一書 4:16–18</div>
+    </div>
+  </div>
+
+  <!-- S2 Scam Analysis -->
+  <div class="slide s2">
+    <div class="slide-inner">
+      <div class="slide-hdr">📱 AI 生物辨識詐騙影片分析</div>
+      <div class="scenario-box" style="margin-top:0; border-radius:0 0 8px 8px;">
+        <strong>📍 情境：</strong>陌生人在街上請你幫忙查地址，趁機錄下眼球動作、擷取臉部特徵，試圖收集生物辨識數據。
+      </div>
+      <div class="two-col" style="margin-top:14px;">
+        <div class="card g">
+          <h3>✅ 真實的擔憂</h3>
+          <ul>
+            <li>生物辨識數據越來越有價值</li>
+            <li>AI 可以用照片製作 Deepfake</li>
+            <li>人臉辨識繞過攻擊確實存在</li>
+            <li>謹慎保護生物特徵是對的態度</li>
+          </ul>
+        </div>
+        <div class="card r">
+          <h3>❌ 誇大或誤導</h3>
+          <ul>
+            <li>路邊接觸無法擷取生物數據</li>
+            <li>靠近無法取得指紋</li>
+            <li>「問路」不是實際攻擊手法</li>
+            <li>無已記錄的同類大規模詐騙</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 Real Risks -->
+  <div class="slide s3">
+    <div class="slide-inner">
+      <div class="slide-hdr" style="background:#B71C1C;">⚠️ 你真正應該注意的生物辨識風險</div>
+      <div class="risk-grid">
+        <div class="risk-card"><div class="ri">📲</div><div><h4>不明 App / 網站</h4><p>把高解析度照片上傳到來路不明的應用程式或網站</p></div></div>
+        <div class="risk-card"><div class="ri">🔐</div><div><h4>不可信第三方服務</h4><p>在不可信的服務上使用生物辨識登入</p></div></div>
+        <div class="risk-card"><div class="ri">🤳</div><div><h4>社群媒體曝光</h4><p>在社群媒體上公開分享清晰的臉部照片</p></div></div>
+        <div class="risk-card"><div class="ri">🎙️</div><div><h4>App 權限濫用</h4><p>允許 App 不必要的相機或麥克風權限</p></div></div>
+      </div>
+      <div class="tip">💡 影片的核心訊息——保護你的生物辨識資料——是正確的建議。但具體情境是為了製造恐懼，並非技術現實。</div>
+    </div>
+  </div>
+
+  <!-- S4 Matthew 24:12 -->
+  <div class="slide s4">
+    <div class="slide-inner">
+      <div class="scripture">
+        <div class="ref-label">📖  馬太福音 24:12</div>
+        <div class="verse">「只因不法的事增多，<br>許多人的愛心，才漸漸冷淡了。」</div>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-card"><div class="ei">💻</div><p>詐騙橫行<br>人心惶惶</p></div>
+        <div class="icon-card"><div class="ei">🎭</div><p>科技被用來<br>欺騙操控</p></div>
+        <div class="icon-card"><div class="ei">🔒</div><p>人與人信任<br>越難建立</p></div>
+        <div class="icon-card"><div class="ei">❄️</div><p>許多人選擇<br>關閉自己的心</p></div>
+      </div>
+      <div class="bottom-note">聖經提前告訴我們——這會發生，讓我們不必驚慌。</div>
+    </div>
+  </div>
+
+  <!-- S5 1 John 4 -->
+  <div class="slide s5">
+    <div class="slide-inner">
+      <div class="ref-label" style="color:var(--gold);font-size:13px;letter-spacing:3px;font-weight:700;text-align:center;margin-bottom:14px;">💛  約翰一書 4:16–18</div>
+      <div class="verse" style="font-size:clamp(20px,3.5vw,34px);font-weight:700;color:#fff;text-align:center;line-height:1.9;margin-bottom:20px;">「愛裡沒有懼怕；<br>愛既完全，就把懼怕除去。」</div>
+      <div class="compare-grid">
+        <div class="col-wrap col1">
+          <div class="col-hdr">世界給的</div>
+          <div class="col-item">懼怕與不安</div>
+          <div class="col-item">冷淡與封閉</div>
+          <div class="col-item">被詐騙後的傷害</div>
+        </div>
+        <div class="col-wrap col2">
+          <div class="col-hdr">神給的</div>
+          <div class="col-item">完全的愛</div>
+          <div class="col-item">住在神裡面的安穩</div>
+          <div class="col-item">在審判日的坦然無懼</div>
+        </div>
+      </div>
+      <div class="anchor">懼怕的對立面，不是勇敢——而是愛。</div>
+    </div>
+  </div>
+
+  <!-- S6 Reminders -->
+  <div class="slide s6">
+    <div class="slide-inner">
+      <div class="slide-hdr" style="background:#0F3460; border-radius:10px; margin-bottom:14px;">🕊️ 實際的提醒與鼓勵</div>
+      <div class="reminder r1">
+        <div class="rnum">一</div>
+        <div class="rcontent">
+          <h4>保持智慧，但不要讓心變冷</h4>
+          <p>詐騙讓人不敢幫助陌生人，但耶穌呼召我們做好撒瑪利亞人。智慧地幫助人，不等於冷漠地拒絕人。</p>
+        </div>
+      </div>
+      <div class="reminder r2">
+        <div class="rnum">二</div>
+        <div class="rcontent">
+          <h4>懼怕是真實的，但不是終點</h4>
+          <p>看見詐騙影片會害怕，這很正常。但神說：「愛既完全，就把懼怕除去。」讓我們帶著安穩面對這個時代。</p>
+        </div>
+      </div>
+      <div class="reminder r3">
+        <div class="rnum">三</div>
+        <div class="rcontent">
+          <h4>不法增多，愛心更要被保守</h4>
+          <p>這個時代最珍貴的，不是你的生物辨識資料——而是你還願意愛人的那顆心。求神保守，在混亂中仍然愛。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7 Identity -->
+  <div class="slide s7">
+    <div class="slide-inner">
+      <div style="text-align:center;color:var(--gold);font-size:13px;letter-spacing:3px;font-weight:700;margin-bottom:12px;">👑  彼得前書 2:9 — 你的身份</div>
+      <div class="verse-small">「惟有你們是被揀選的族類、是有君尊的祭司、<br>是聖潔的國度、是屬神的子民…」</div>
+      <div class="id-grid">
+        <div class="id-card">
+          <div class="id-num">1</div>
+          <h4>被揀選的族類</h4>
+          <p>你不是偶然存在<br>你有目的與使命</p>
+        </div>
+        <div class="id-card">
+          <div class="id-num">2</div>
+          <h4>有君尊的祭司</h4>
+          <p>在神與人之間<br>有代禱的使命</p>
+        </div>
+        <div class="id-card">
+          <div class="id-num">3</div>
+          <h4>聖潔的國度</h4>
+          <p>活在不同的標準<br>與這世界有別</p>
+        </div>
+        <div class="id-card">
+          <div class="id-num">4</div>
+          <h4>屬神的子民</h4>
+          <p>你有歸屬<br>你不孤單</p>
+        </div>
+      </div>
+      <div class="id-note">這四個身份，不是你努力得來的——是神揀選、呼召、賜給你的。</div>
+    </div>
+  </div>
+
+  <!-- S8 Light -->
+  <div class="slide s8">
+    <div class="slide-inner">
+      <div style="text-align:center;color:var(--gold);font-size:13px;letter-spacing:3px;font-weight:700;margin-bottom:14px;">🌟  走在人前面——為光作見證</div>
+      <div class="light-title" style="text-align:center;">光是什麼樣子？</div>
+      <div class="light-grid">
+        <div class="light-card"><div class="li-icon">✨</div><p>人人自保時<br>你仍然誠實</p></div>
+        <div class="light-card"><div class="li-icon">💗</div><p>人心冷淡時<br>你仍然關懷人</p></div>
+        <div class="light-card"><div class="li-icon">🗣️</div><p>謊言充斥時<br>你的話仍然算數</p></div>
+        <div class="light-card"><div class="li-icon">🕊️</div><p>懼怕瀰漫時<br>你仍然坦然無懼</p></div>
+        <div class="light-card"><div class="li-icon">📡</div><p>科技被濫用時<br>你用科技傳遞愛</p></div>
+      </div>
+      <div class="mantra">光不需要大聲宣告自己是光。光只需要發光，黑暗自然退去。</div>
+      <div class="mission">屬神的人，活出真實、誠信、有愛的生命，本身就是見證。</div>
+    </div>
+  </div>
+
+  <!-- S9 Prayer -->
+  <div class="slide s9">
+    <div class="slide-inner" style="justify-content:center;align-items:center;">
+      <div class="prayer-box">
+        <div class="pi">🙏</div>
+        <h3>一個簡短的禱告</h3>
+        <p>主啊，這個世界越來越複雜，</p>
+        <p>詐騙讓人害怕，不法讓人心冷。</p>
+        <p>求祢的完全之愛，除去我們心中的懼怕，</p>
+        <p>讓我們住在祢裡面，也住在愛裡面，</p>
+        <p>在這個時代，仍然有智慧、有勇氣、有愛心。</p>
+        <div class="amen">奉耶穌的名求，阿們。🙏</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S10 Close -->
+  <div class="slide s10">
+    <div class="slide-inner">
+      <div class="s10 main-title">在這個 AI 時代</div>
+      <div class="s10 big-word">我們是光</div>
+      <div class="s10 deco">🕊️ ✨</div>
+      <div class="s10 quote">「要叫你們宣揚那召你們出黑暗、入奇妙光明者的美德。」</div>
+      <div class="s10 qref">彼得前書 2:9</div>
+      <div class="s10 final">我們不只是在黑暗中求生存的人——我們是被差遣進黑暗、帶來光明的人。</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Nav -->
+<div class="nav">
+  <button onclick="go(-1)">‹</button>
+  <div class="dot-row" id="dots"></div>
+  <span class="counter" id="counter">1 / 10</span>
+  <button onclick="go(1)">›</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const counterEl = document.getElementById('counter');
+  let cur = 0;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('on');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('on');
+    counterEl.textContent = `${cur + 1} / ${slides.length}`;
+  }
+
+  function go(d) { goTo(cur + d); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+  });
+
+  // Touch swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const dx = tx - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 40) go(dx > 0 ? 1 : -1);
+  });
+</script>
+</body>
+</html>
