@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 時代的信仰與智慧 — 電子報</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #F0EBE3;
+    font-family: 'Noto Sans TC', 'Arial', sans-serif;
+    color: #2D2D2D;
+    line-height: 1.8;
+  }
+
+  .wrapper { max-width: 680px; margin: 0 auto; background: #fff; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1A3A5C 60%, #0D1B2A 100%);
+    padding: 48px 40px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #C9820A, #E8B84B, #C9820A);
+  }
+  .header-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+  .header h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px;
+    color: #FFFFFF;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .header .sub {
+    font-size: 14px;
+    color: #E8B84B;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .header .tagline {
+    font-size: 12px;
+    color: #8899BB;
+    letter-spacing: 1px;
+  }
+
+  /* Sections */
+  .section { padding: 36px 40px; }
+  .section + .section { border-top: 1px solid #F0EBE3; }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1A237E;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #E8B84B;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Scenario box */
+  .scenario {
+    background: #FFF8E1;
+    border-left: 5px solid #FFC107;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #5D4037;
+  }
+
+  /* Two-column grid */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+
+  .card {
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 13px;
+  }
+  .card.green { background: #E8F5E9; border: 1.5px solid #4CAF50; }
+  .card.red { background: #FFEBEE; border: 1.5px solid #F44336; }
+  .card.blue { background: #E3F2FD; border: 1.5px solid #1565C0; }
+  .card.purple { background: #F3E5F5; border: 1.5px solid #6A1B9A; }
+
+  .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .card.green h3 { color: #2E7D32; }
+  .card.red h3 { color: #C62828; }
+  .card.blue h3 { color: #1565C0; }
+  .card.purple h3 { color: #6A1B9A; }
+
+  .card ul { padding-left: 16px; }
+  .card ul li { margin-bottom: 5px; color: #444; }
+
+  /* Risk grid */
+  .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .risk-item {
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+  .risk-icon { font-size: 28px; flex-shrink: 0; }
+  .risk-text h4 { font-size: 13px; font-weight: 700; color: #B71C1C; margin-bottom: 4px; }
+  .risk-text p { font-size: 12px; color: #555; }
+
+  /* Summary box */
+  .summary-box {
+    background: #FFF8E1;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 13px;
+    color: #5D4037;
+    font-style: italic;
+  }
+  .summary-box strong { color: #C9820A; }
+
+  /* Scripture */
+  .scripture-block {
+    background: linear-gradient(135deg, #F5F0E8, #FFFDF5);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 20px 0;
+    text-align: center;
+    border: 1px solid #E8D5A3;
+    position: relative;
+  }
+  .scripture-block::before {
+    content: '"';
+    font-size: 80px;
+    color: #E8B84B;
+    opacity: 0.3;
+    position: absolute;
+    top: -10px; left: 16px;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .scripture-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px;
+    color: #3E2723;
+    font-weight: 700;
+    line-height: 2;
+    margin-bottom: 12px;
+  }
+  .scripture-ref {
+    font-size: 13px;
+    color: #C9820A;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* Comparison table */
+  .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  .compare-table th {
+    padding: 12px 16px;
+    text-align: center;
+    font-weight: 700;
+    color: white;
+    font-size: 14px;
+  }
+  .compare-table th:first-child { background: #37474F; border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { background: #2E7D32; border-radius: 0 8px 0 0; }
+  .compare-table td { padding: 11px 16px; text-align: center; }
+  .compare-table tr:nth-child(odd) td:first-child { background: #ECEFF1; }
+  .compare-table tr:nth-child(even) td:first-child { background: #CFD8DC; }
+  .compare-table tr:nth-child(odd) td:last-child { background: #E8F5E9; }
+  .compare-table tr:nth-child(even) td:last-child { background: #C8E6C9; }
+
+  /* Reminder cards */
+  .reminder-card {
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin: 12px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .reminder-card.r1 { background: #E3F2FD; border-left: 5px solid #1565C0; }
+  .reminder-card.r2 { background: #E8F5E9; border-left: 5px solid #2E7D32; }
+  .reminder-card.r3 { background: #F3E5F5; border-left: 5px solid #6A1B9A; }
+
+  .reminder-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 15px; color: white; flex-shrink: 0;
+  }
+  .r1 .reminder-num { background: #1565C0; }
+  .r2 .reminder-num { background: #2E7D32; }
+  .r3 .reminder-num { background: #6A1B9A; }
+  .reminder-content h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .r1 .reminder-content h4 { color: #1565C0; }
+  .r2 .reminder-content h4 { color: #2E7D32; }
+  .r3 .reminder-content h4 { color: #6A1B9A; }
+  .reminder-content p { font-size: 13px; color: #444; }
+
+  /* Identity grid */
+  .identity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 16px 0; }
+  .identity-card {
+    background: linear-gradient(135deg, #1A237E, #283593);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+  }
+  .identity-card .num {
+    background: #E8B84B;
+    color: #1A237E;
+    width: 28px; height: 28px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; margin-bottom: 10px;
+  }
+  .identity-card h4 { font-size: 14px; font-weight: 700; color: #E8B84B; margin-bottom: 6px; }
+  .identity-card p { font-size: 12px; color: #C5CAE9; }
+
+  /* Light table */
+  .light-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  .light-table th { padding: 10px 14px; text-align: center; font-weight: 700; color: white; }
+  .light-table th:first-child { background: #37474F; border-radius: 8px 0 0 0; }
+  .light-table th:last-child { background: #1B5E20; border-radius: 0 8px 0 0; }
+  .light-table td { padding: 10px 14px; }
+  .light-table tr:nth-child(odd) td:first-child { background: #ECEFF1; color: #333; }
+  .light-table tr:nth-child(even) td:first-child { background: #CFD8DC; color: #333; }
+  .light-table tr:nth-child(odd) td:last-child { background: #E8F5E9; color: #1B5E20; font-weight: 500; }
+  .light-table tr:nth-child(even) td:last-child { background: #C8E6C9; color: #1B5E20; font-weight: 500; }
+
+  /* Prayer */
+  .prayer-box {
+    background: linear-gradient(135deg, #1A1A2E, #16213E);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin: 20px 0;
+    text-align: center;
+    border-top: 3px solid #E8B84B;
+  }
+  .prayer-box .icon { font-size: 36px; margin-bottom: 16px; display: block; }
+  .prayer-box h3 { color: #E8B84B; font-size: 16px; margin-bottom: 20px; letter-spacing: 2px; }
+  .prayer-box p {
+    font-size: 14px; color: #C5CAE9; line-height: 2;
+    font-style: italic; margin-bottom: 6px;
+  }
+  .prayer-box .amen {
+    font-size: 16px; color: #E8B84B; font-weight: 700;
+    margin-top: 16px; font-style: normal;
+  }
+
+  /* Closing */
+  .closing {
+    background: linear-gradient(135deg, #0D1B2A, #1A3A5C);
+    padding: 48px 40px;
+    text-align: center;
+  }
+  .closing .big { font-size: 24px; font-weight: 700; color: #E8B84B; margin-bottom: 10px; }
+  .closing .small { font-size: 14px; color: #8899BB; margin-bottom: 8px; }
+  .closing .verse { font-size: 13px; color: #C5CAE9; font-style: italic; margin-top: 16px; }
+  .closing .ref { font-size: 12px; color: #E8B84B; margin-top: 6px; }
+
+  .badge {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .badge-gold { background: #E8B84B; color: #1A1A2E; }
+
+  p { font-size: 14px; color: #444; line-height: 1.9; margin-bottom: 10px; }
+  strong { color: #1A237E; }
+
+  @media (max-width: 480px) {
+    .two-col, .risk-grid, .identity-grid { grid-template-columns: 1fr; }
+    .section { padding: 24px 20px; }
+    .header { padding: 32px 20px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="header-icon">🕊️</span>
+    <h1>AI 時代的信仰與智慧</h1>
+    <div class="sub">Wisdom &amp; Faith in the Age of AI</div>
+    <div class="tagline">認識 AI 詐騙 · 守護生物辨識資料 · 在愛中坦然無懼</div>
+  </div>
+
+  <!-- Section 1: Scam Analysis -->
+  <div class="section">
+    <div class="section-title">
+      <span>📱</span>
+      <span>AI 生物辨識詐騙影片分析</span>
+    </div>
+
+    <div class="scenario">
+      <strong>📍 影片情境：</strong>一名陌生人在街上請你幫忙查地址，趁機錄下眼球動作、擷取臉部特徵，並試圖收集生物辨識數據。
+    </div>
+
+    <div class="two-col">
+      <div class="card green">
+        <h3>✅ 真實的擔憂</h3>
+        <ul>
+          <li>生物辨識數據越來越有價值</li>
+          <li>AI 可製作逼真 Deepfake</li>
+          <li>人臉辨識繞過攻擊確實存在</li>
+          <li>謹慎保護生物特徵是對的</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h3>❌ 誇大或誤導</h3>
+        <ul>
+          <li>路邊接觸無法擷取生物數據</li>
+          <li>靠近無法取得指紋</li>
+          <li>「問路」不是實際攻擊手法</li>
+          <li>無已記錄的同類大規模詐騙</li>
+        </ul>
+      </div>
+    </div>
+
+    <p><strong>⚠️ 你真正應該注意的風險：</strong></p>
+    <div class="risk-grid">
+      <div class="risk-item">
+        <div class="risk-icon">📲</div>
+        <div class="risk-text">
+          <h4>不明 App / 網站</h4>
+          <p>把高解析度照片上傳到來路不明的應用程式</p>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon">🔐</div>
+        <div class="risk-text">
+          <h4>不可信第三方服務</h4>
+          <p>在不可信的服務上使用生物辨識登入</p>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon">🤳</div>
+        <div class="risk-text">
+          <h4>社群媒體曝光</h4>
+          <p>公開分享清晰臉部照片於社群媒體</p>
+        </div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-icon">🎙️</div>
+        <div class="risk-text">
+          <h4>App 權限濫用</h4>
+          <p>允許 App 不必要的相機或麥克風權限</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      💡 影片的核心訊息——<strong>保護你的生物辨識資料</strong>——是正確的建議。但影片描述的具體場景，更多是為了製造恐懼，而非基於實際的技術現實。看到這類「安全警告」影片時，請保持批判性思考。
+    </div>
+  </div>
+
+  <!-- Section 2: Matthew 24:12 -->
+  <div class="section" style="background:#FAFAFA;">
+    <div class="section-title">
+      <span>📖</span>
+      <span>馬太福音 24:12 的提醒</span>
+    </div>
+
+    <div class="scripture-block">
+      <div class="scripture-text">「只因不法的事增多，<br>許多人的愛心才漸漸冷淡了。」</div>
+      <div class="scripture-ref">——馬太福音 24:12</div>
+    </div>
+
+    <p>這節經文描述的，正是我們今天所處的時代：詐騙橫行、科技被用來欺騙操控、人與人之間的信任越來越難建立，許多人因為受傷而選擇關閉自己的心。</p>
+    <p>這不是軟弱，這是人的自然反應。<strong>但聖經提前告訴我們：這會發生，讓我們不必驚慌。</strong></p>
+  </div>
+
+  <!-- Section 3: 1 John 4 -->
+  <div class="section">
+    <div class="section-title">
+      <span>💛</span>
+      <span>約翰一書 4:16–18 的鼓勵</span>
+    </div>
+
+    <div class="scripture-block">
+      <div class="scripture-text">「愛裡沒有懼怕；<br>愛既完全，就把懼怕除去。」</div>
+      <div class="scripture-ref">——約翰一書 4:18</div>
+    </div>
+
+    <p>在一個充滿 AI 詐騙、生物辨識盜竊、深偽技術的世界裡，人很容易活在懼怕當中——「我能相信誰？」「我的資料安全嗎？」</p>
+    <p><strong>但神的話語給我們一個錨點：懼怕的對立面，不是勇敢——而是愛。</strong></p>
+
+    <table class="compare-table">
+      <tr><th>世界給的</th><th>神給的</th></tr>
+      <tr><td>懼怕與不安</td><td>完全的愛</td></tr>
+      <tr><td>冷淡與封閉</td><td>住在神裡面的安穩</td></tr>
+      <tr><td>被詐騙後的傷害</td><td>在審判日的坦然無懼</td></tr>
+    </table>
+  </div>
+
+  <!-- Section 4: Three Reminders -->
+  <div class="section" style="background:#FAFAFA;">
+    <div class="section-title">
+      <span>🕊️</span>
+      <span>實際的提醒與鼓勵</span>
+    </div>
+
+    <div class="reminder-card r1">
+      <div class="reminder-num">一</div>
+      <div class="reminder-content">
+        <h4>保持智慧，但不要讓心變冷</h4>
+        <p>詐騙讓人不敢幫助陌生人，但耶穌呼召我們做好撒瑪利亞人。智慧地幫助人，不等於冷漠地拒絕人。</p>
+      </div>
+    </div>
+
+    <div class="reminder-card r2">
+      <div class="reminder-num">二</div>
+      <div class="reminder-content">
+        <h4>懼怕是真實的，但不是終點</h4>
+        <p>看見詐騙影片會害怕，這很正常。但神說：「愛既完全，就把懼怕除去。」讓我們帶著這份安穩去面對這個時代。</p>
+      </div>
+    </div>
+
+    <div class="reminder-card r3">
+      <div class="reminder-num">三</div>
+      <div class="reminder-content">
+        <h4>不法增多，愛心更要被保守</h4>
+        <p>這個時代最珍貴的，不是你的生物辨識資料——而是你還願意愛人的那顆心。求神保守我們，在混亂中仍然愛。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Identity -->
+  <div class="section">
+    <div class="section-title">
+      <span>👑</span>
+      <span>彼得前書 2:9 — 你的身份</span>
+    </div>
+
+    <div class="scripture-block">
+      <div class="scripture-text" style="font-size:15px;">「惟有你們是被揀選的族類、是有君尊的祭司、<br>是聖潔的國度、是屬神的子民…」</div>
+      <div class="scripture-ref">——彼得前書 2:9</div>
+    </div>
+
+    <p>在這個詐騙橫行、人心冷淡的時代，很多人選擇退縮、封閉。<strong>但神對你的定義，從來不是這樣。</strong></p>
+
+    <div class="identity-grid">
+      <div class="identity-card">
+        <div class="num">1</div>
+        <h4>被揀選的族類</h4>
+        <p>你不是偶然存在<br>你有目的與使命</p>
+      </div>
+      <div class="identity-card">
+        <div class="num">2</div>
+        <h4>有君尊的祭司</h4>
+        <p>在神與人之間<br>有代禱的使命</p>
+      </div>
+      <div class="identity-card">
+        <div class="num">3</div>
+        <h4>聖潔的國度</h4>
+        <p>活在不同的標準<br>與這世界有別</p>
+      </div>
+      <div class="identity-card">
+        <div class="num">4</div>
+        <h4>屬神的子民</h4>
+        <p>你有歸屬<br>你不孤單</p>
+      </div>
+    </div>
+
+    <p style="color:#1A237E; font-weight:700; text-align:center; margin-top:16px;">
+      這四個身份，不是你努力得來的——是神揀選、呼召、賜給你的。
+    </p>
+  </div>
+
+  <!-- Section 6: Light -->
+  <div class="section" style="background:#FAFAFA;">
+    <div class="section-title">
+      <span>🌟</span>
+      <span>走在人前面——為光作見證</span>
+    </div>
+
+    <p>光不需要大聲宣告自己是光。<strong>光只需要發光，黑暗自然退去。</strong></p>
+
+    <table class="light-table">
+      <tr><th>時代的景況</th><th>光的樣子</th></tr>
+      <tr><td>人人自保的時代</td><td>✨ 你仍然誠實</td></tr>
+      <tr><td>人心冷淡的時代</td><td>💗 你仍然關懷人</td></tr>
+      <tr><td>謊言充斥的時代</td><td>🗣️ 你的話仍然算數</td></tr>
+      <tr><td>懼怕瀰漫的時代</td><td>🕊️ 你仍然坦然無懼</td></tr>
+      <tr><td>科技被濫用的時代</td><td>📡 你用科技傳遞真理與愛</td></tr>
+    </table>
+
+    <p>在 AI 詐騙盛行的時代，當所有人都在懷疑、恐懼、冷漠的時候——屬神的人，活出真實、誠信、有愛的生命，本身就是見證。</p>
+  </div>
+
+  <!-- Prayer -->
+  <div class="section">
+    <div class="prayer-box">
+      <span class="icon">🙏</span>
+      <h3>一個簡短的禱告</h3>
+      <p>主啊，這個世界越來越複雜，</p>
+      <p>詐騙讓人害怕，不法讓人心冷。</p>
+      <p>求祢的完全之愛，除去我們心中的懼怕，</p>
+      <p>讓我們住在祢裡面，也住在愛裡面，</p>
+      <p>在這個時代，仍然有智慧、有勇氣、有愛心。</p>
+      <div class="amen">奉耶穌的名求，阿們。🙏</div>
+    </div>
+  </div>
+
+  <!-- Closing -->
+  <div class="closing">
+    <div class="badge badge-gold">彼得前書 2:9</div>
+    <div class="big">我們是光</div>
+    <div class="small">我們不只是在黑暗中求生存的人——</div>
+    <div class="small">我們是被差遣進黑暗、帶來光明的人。</div>
+    <div style="font-size:36px; margin: 16px 0;">🕊️ ✨</div>
+    <div class="verse">「要叫你們宣揚那召你們出黑暗、入奇妙光明者的美德。」</div>
+    <div class="ref">彼得前書 2:9</div>
+    <div style="margin-top:24px; font-size:12px; color:#4A5D7A;">
+      願我們在這個 AI 時代，不失去那最重要的——愛的能力。
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
